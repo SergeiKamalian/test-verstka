@@ -1,30 +1,18 @@
-import Header from './components/header/Header';
-import './styles/index.scss'
-import { useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux/es/exports';
-import { setLanguage } from './redux/features/actions';
-import Navigation from './components/navigation/Navigation';
+import { useState } from "react";
+import BurgerMenu from "./components/burgerMenu/BurgerMenu";
+import Header from "./components/header/Header";
+import Main from "./components/main/Main";
+import Navigation from "./components/navigation/Navigation";
+
 const App = () => {
-  const dispatch = useDispatch()
-
-  const getLanguage = useCallback(() => {
-    const language = localStorage.getItem('kamalyan-webLanguage')
-    if (language) {
-      dispatch(setLanguage(language))
-    } else {
-      dispatch(setLanguage('en'))
-      localStorage.setItem('kamalyan-webLanguage', 'en')
-    }
-  }, [dispatch])
-
-  useEffect(() => {
-    getLanguage()
-  }, [getLanguage])
-
+  const [burgerOpen, setBurgerOpen] = useState(false)
   return (
-    <div className="App">
-      <Header />
-      <Navigation />
+    <div className="App" style={burgerOpen ? { overflow: 'hidden', height: '100vh' } : {}}>
+      {/* <BurgerMenu /> */}
+      {burgerOpen && <BurgerMenu />}
+      <Navigation setBurgerOpen={setBurgerOpen} burgerOpen={burgerOpen} />
+      {!burgerOpen && <Header />}
+      {!burgerOpen && <Main />}
     </div>
   );
 }

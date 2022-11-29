@@ -1,44 +1,32 @@
-import { BsHouse } from 'react-icons/bs'
-import { BsPerson } from 'react-icons/bs'
-import { BsCardChecklist } from 'react-icons/bs'
-import { BsGrid } from 'react-icons/bs'
-import { BiMessageSquareDetail } from 'react-icons/bi'
-import { useCallback, useState } from 'react'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { MdOutlineClose } from 'react-icons/md'
+import { AiOutlineClose } from 'react-icons/ai'
+const Navigation = ({ setBurgerOpen, burgerOpen }: { burgerOpen: boolean; setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
-interface ILink {
-    value: string;
-    jsx: JSX.Element;
-}
-
-const links: ILink[] = [
-    { value: 'home', jsx: <BsHouse /> },
-    { value: 'myInfo', jsx: <BsPerson /> },
-    { value: 'experience', jsx: <BsCardChecklist /> },
-    { value: 'portfolio', jsx: <BsGrid /> },
-    { value: 'contactme', jsx: <BiMessageSquareDetail /> }
-]
-
-const Navigation = () => {
-
-    const [activeLink, setActiveLink] = useState(links[0])
-
-    const changeActiveLink = useCallback((link: ILink) => {
-        setActiveLink(link)
-    }, [])
+    const changeBurgerMenu = () => {
+        burgerOpen ? setBurgerOpen(false) : setBurgerOpen(true)
+        console.log('сработал')
+    }
 
     return (
-        <nav className='Navigation'>
-            <ul>
-                {
-                    links.map((link) =>
-                        <li
-                            className={link.value === activeLink.value ? 'activeLink' : ''}
-                            onClick={() => changeActiveLink(link)}
-                        >{link.jsx}</li>
-                    )
-                }
+        <div className='Navigation flexRow container'>
+            <img src={require('../../images/logo.png')} alt="logo" />
+            <ul className="flexRow">
+                <li>FAQ</li>
+                <li>Оплата и доставка</li>
+                <li>Возврат</li>
+                <li>Исследования</li>
+                <li>Личный кабинет</li>
+                <li>8 8 (800) 600-09-90</li>
             </ul>
-        </nav>
+            <div className="basket">
+                <img src={require('../../images/basket.png')} alt="basket" />
+                <div className="basket_count center">1</div>
+            </div>
+            <div className="burger" onClick={changeBurgerMenu} style={{ color: 'white' }}>
+                {burgerOpen ? <MdOutlineClose /> : <GiHamburgerMenu />}
+            </div>
+        </div>
     )
 }
 
